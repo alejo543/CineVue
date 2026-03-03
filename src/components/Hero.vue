@@ -42,8 +42,8 @@ const isSwiperEnabled =  ref(loadingHero)
                 <SwiperSlide v-for="movie in moviesInHero" :key="movie.id" class="relative mask-radial-at-top mask-radial-from-100%" >
                     <div class="mask-l-from-0% mask-b-from-10% mask-l-to-90% text-slate-100 h-full transition-all duration-400">
                         <HeroSkeleton v-if="loadingHero"/>
-                        <img v-else-if="!loadingHero && movie.backdrop_path" :src="`https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces/${movie.backdrop_path}`" class="object-cover h-full md:h-auto md:w-full" />
-                        <img v-else-if="!loadingHero && !movie.backdrop_path" :src="`https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces_filter(blur)/${movie.poster_path}`" class="object-cover h-full md:h-auto md:w-full" />
+                        <img v-else-if="!loadingHero && movie.backdrop_path" :src="`https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces/${movie.backdrop_path}`" :alt="movie.title" class="object-cover h-full md:h-auto md:w-full" />
+                        <img v-else-if="!loadingHero && !movie.backdrop_path" :src="`https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces_filter(blur)/${movie.poster_path}`" :alt="movie.title" class="object-cover h-full md:h-auto md:w-full" />
                     </div>
                     <div class="absolute w-full h-full top-0 z-20 px-10 md:px-15 lg:px-30 flex items-center">
                         <div class="max-w-xl flex flex-col gap-5">
