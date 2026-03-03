@@ -1,0 +1,26 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+.swiper-pagination{
+    display: flex;
+    justify-content: end;
+    padding-right: 50px;
+} 
+
+.swiper-pagination-bullet{
+    @variant dark{
+        background-color: oklch(0.869 0.022 252.894)!important;
+    }
+}
+
+.swiper-pagination-bullet-active{
+    background-color: oklch(54.6% 0.245 262.881)!important;
+    width: 30px!important;
+    border-radius: 5px!important;
+}
+
+@media (max-width: 768px){
+    .swiper-pagination{
+        display: none!important;
+    }
+}

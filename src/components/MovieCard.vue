@@ -1,0 +1,30 @@
+<script setup>
+import { RouterLink } from 'vue-router';
+import ImgNoFound from '../assets/imgNotFound.png'
+import PlayIcon from '../icons/PlayIcon.vue'
+const props = defineProps({
+  movie: Object,
+  type:{type:String,required:true},
+  loading:{type:Boolean,required:true}
+})
+</script>
+
+<template>
+    <div class="group relative w-full h-full rounded-xl overflow-hidden">
+        <img v-if="!movie.poster_path" :src="ImgNoFound" :alt="movie.Title" class="group-hover:scale-[1.1] transition-all duration-600 w-full h-full" />
+        <img v-else  :src="`https://media.themoviedb.org/t/p/w300_and_h450_face/${movie.poster_path}`" :alt="movie.Title" class="group-hover:scale-[1.1] transition-all duration-600 w-full h-full" />
+        <div class="absolute z-10 p-3 bg-black/50 hidden group-hover:flex top-0 w-full h-full">
+            <RouterLink :to="`/movie/${movie.id}`" class="flex w-full justify-center items-center">
+                <div>
+                    <div class="flex justify-center mb-3">
+                        <span class="bg-blue-600 text-slate-100 p-2 w-10 h-10 flex items-center justify-center rounded-full text-center">
+                            <PlayIcon class="w-5 h-5"/>
+                        </span>
+                    </div>
+                    <h2 class="text-lg font-bold text-white/90 text-center">{{ movie.title }}</h2>
+                    <p class="text-sm text-gray-600 text-white/70 text-center">{{ movie.release_date }}</p>
+                </div>
+            </RouterLink>
+        </div>  
+    </div>
+</template>
