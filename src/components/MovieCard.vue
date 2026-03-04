@@ -2,11 +2,13 @@
 import { RouterLink } from 'vue-router';
 import ImgNoFound from '../assets/imgNotFound.png'
 import PlayIcon from '../icons/PlayIcon.vue'
+import { inject } from 'vue';
 const props = defineProps({
   movie: Object,
   type:{type:String,required:true},
-  loading:{type:Boolean,required:true}
 })
+
+const { dateToYearConvert } = inject('formaters');
 </script>
 
 <template>
@@ -21,8 +23,8 @@ const props = defineProps({
                             <PlayIcon class="w-5 h-5"/>
                         </span>
                     </div>
-                    <h2 class="text-lg font-bold text-white/90 text-center">{{ movie.title }}</h2>
-                    <p class="text-sm text-gray-600 text-white/70 text-center">{{ movie.release_date }}</p>
+                    <h2 class="text-[3vw] md:text-[2.5vw] lg:text-[1.5vw] xl:text-lg font-bold text-white/90 text-center">{{ movie.title }}</h2>
+                    <p class="text-sm font-semibold text-gray-600 text-white/70 text-center">{{ dateToYearConvert(movie.release_date) }}</p>
                 </div>
             </RouterLink>
         </div>  

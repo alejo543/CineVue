@@ -1,9 +1,7 @@
 <script setup>
 import { useModal } from '../composables/useModal';
 import CloseIcon from '../icons/Close.vue';
-import { useMovieDetail } from '../composables/useMovieDetails';
 const { isOpen, modalTitle, modalContent, closeModal } = useModal();
-const {findMovie, movieDetail, timeConvert, findMovieVideos, findMovieCast,loading, movieCast, movieVideos} = useMovieDetail()
 </script>
 
 <template>
@@ -17,7 +15,7 @@ const {findMovie, movieDetail, timeConvert, findMovieVideos, findMovieCast,loadi
             </div>
             <div class="modal-body w-full h-[90%]">
                 <iframe id="player" type="text/html" width="100%" height="100%"
-                :src="`http://www.youtube.com/embed/${modalContent.key}?enablejsapi=1`"
+                :src="`https://www.youtube.com/embed/${modalContent.key}?enablejsapi=1`"
                 frameborder="0"></iframe>
             </div>
            

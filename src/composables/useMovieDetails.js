@@ -13,14 +13,6 @@ export function useMovieDetail(){
     const BASE_URL = 'https://api.themoviedb.org/3';
     const ENDPOINT = '/movie/';
 
-    const timeConvert = (totalMinutes) => {
-        const hours = Math.floor(totalMinutes / 60);
-        const minutes = totalMinutes % 60;
-        const formattedMinutes = minutes.toString().padStart(2, '0');
-
-        return `${hours}h ${formattedMinutes}m`;
-    }
-
     const findMovie = async (id) =>{
         loading.value = true
 
@@ -37,7 +29,7 @@ export function useMovieDetail(){
             const response = await fetch(`${BASE_URL}${ENDPOINT}${id}`,option);
             const data = await response.json();
             movieDetail.value = data;
-            console.log(data);
+            //console.log(data);
         }catch(error){
             console.log("Error al buscar:", error);
         }finally{
@@ -61,7 +53,7 @@ export function useMovieDetail(){
             const response = await fetch(`${BASE_URL}${ENDPOINT}${id}/videos`,option);
             const data = await response.json();
             movieVideos.value = data.results[0];
-            console.log(data.results[0]);
+            //console.log(data.results[0]);
         }catch(error){
             console.log("Error al buscar:", error);
         }finally{
@@ -85,7 +77,7 @@ export function useMovieDetail(){
             const response = await fetch(`${BASE_URL}${ENDPOINT}${id}/credits`,option);
             const data = await response.json();
             movieCast.value = data.cast.splice(0,10);
-            console.log(data.cast);
+            //console.log(data.cast);
         }catch(error){
             console.log("Error al buscar:", error);
         }finally{
@@ -108,7 +100,7 @@ export function useMovieDetail(){
             const response = await fetch(`${BASE_URL}${ENDPOINT}${id}/recommendations`,option);
             const data = await response.json();
             movieRecomendations.value = data.results;
-            console.log(data.results);
+            //console.log(data.results);
         }catch(error){
             console.log("Error al buscar:", error);
         }finally{
@@ -117,6 +109,6 @@ export function useMovieDetail(){
     }
 
 
-    return {findMovie,findMovieVideos,findMovieCast, findMovieRecomendations, movieDetail, movieVideos, movieCast, movieRecomendations, timeConvert, loading}
+    return {findMovie,findMovieVideos,findMovieCast, findMovieRecomendations, movieDetail, movieVideos, movieCast, movieRecomendations, loading}
 }
 

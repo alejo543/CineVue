@@ -12,7 +12,7 @@ const { movies, loading, searchMovie,textBusqueda } = inject('movie');
 
 <template>
     <section class="flex justify-center">
-        <div class="max-w-6xl w-full px-4 lg:px-0 py-30">
+        <div class="max-w-6xl w-full px-4 xl:px-0 py-30">
             <h1 class="text-3xl text-slate-900 dark:text-slate-100 font-bold mb-10">
                 {{ textBusqueda == '' ? 'Películas Populares' : 'Resultados de: '+textBusqueda }}
             </h1>

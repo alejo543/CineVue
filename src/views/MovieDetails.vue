@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, watch } from 'vue';
+import { inject, onMounted, watch } from 'vue';
 import { useMovieDetail } from '../composables/useMovieDetails';
 import { useRoute } from 'vue-router';
 import Star from '../icons/Star.vue'
@@ -15,19 +15,19 @@ import ListRecomendation from '../components/ListRecomendation.vue';
 import TextSkeleton from '../components/ui/skeleton/TextSkeleton.vue';
 import MovieCardSkeleton from '../components/ui/skeleton/MovieCardSkeleton.vue';
 import HeroSkeleton from '../components/ui/skeleton/HeroSkeleton.vue';
-const { openModal } = useModal();
 
-const route =  useRoute()
-const {findMovie,timeConvert, findMovieVideos, findMovieCast, findMovieRecomendations, loading, movieDetail, movieCast, movieVideos, movieRecomendations} = useMovieDetail()
+const { openModal } = useModal();
+const route = useRoute();
+const {findMovie, findMovieVideos, findMovieCast, findMovieRecomendations, loading, movieDetail, movieCast, movieVideos, movieRecomendations} = useMovieDetail()
 
 const loadAllData = (id) => {
-    findMovie(id)
-    findMovieVideos(id)
-    findMovieCast(id)
-    findMovieRecomendations(id)
+    findMovie(id);
+    findMovieVideos(id);
+    findMovieCast(id);
+    findMovieRecomendations(id);
 }
 onMounted(()=>{
-    loadAllData(route.params.id)
+    loadAllData(route.params.id);
 })
 
 onMounted(() => {
@@ -45,6 +45,8 @@ watch(
         }
     }
 );
+
+const { timeMovieConvert,dateToYearConvert,rateConvert,moneyConvert } = inject('formaters');
 
 const handleMoreInfo = () => {
     openModal(`Reproducir Trailer`, movieVideos.value);
@@ -83,9 +85,9 @@ const handleMoreInfo = () => {
                                 </div>
                                 <div class="flex flex-wrap gap-5 mt-4">
                                     <TextSkeleton v-if="loading" v-for="n in 3" :type="'p-for'" :key="n"/>
-                                    <p v-if="!loading" class="text-sm text-slate-800 dark:text-slate-200 font-medium flex gap-1 items-center"><Star class="w-6 h-6 text-amber-600 dark:text-amber-300"/>{{ Math.round(movieDetail.vote_average) }}/10</p>
-                                    <p v-if="!loading && movieDetail && movieDetail.release_date" class="text-sm text-slate-800 dark:text-slate-200 font-medium flex gap-1 items-center"><Calendar class="w-6 h-6"/>{{ movieDetail.release_date.slice(0,4) }}</p>
-                                    <p v-if="!loading" class="text-sm text-slate-800 dark:text-slate-200 font-medium flex gap-1 items-center"><Time class="w-6 h-6" />{{ timeConvert(movieDetail.runtime) }}</p>
+                                    <p v-if="!loading" class="text-sm text-slate-800 dark:text-slate-200 font-medium flex gap-1 items-center"><Star class="w-6 h-6 text-amber-600 dark:text-amber-300"/>{{ rateConvert(movieDetail.vote_average) }}/10</p>
+                                    <p v-if="!loading && movieDetail && movieDetail.release_date" class="text-sm text-slate-800 dark:text-slate-200 font-medium flex gap-1 items-center"><Calendar class="w-6 h-6"/>{{ dateToYearConvert(movieDetail.release_date) }}</p>
+                                    <p v-if="!loading" class="text-sm text-slate-800 dark:text-slate-200 font-medium flex gap-1 items-center"><Time class="w-6 h-6" />{{ timeMovieConvert(movieDetail.runtime) }}</p>
                                 </div>
                                 <div class="flex items-center mt-4">
                                     <TextSkeleton v-if="loading" :type="'button'"/>
@@ -131,7 +133,7 @@ const handleMoreInfo = () => {
                                         <div class="p-5 bg-slate-100 dark:bg-slate-900 p-3 rounded-lg border border-slate-300 dark:border-slate-800 transition-all duration-400">
                                             <p class="text-center text-slate-600 dark:text-slate-600 font-bold transition-all duration-400">Budget</p>
                                             <TextSkeleton v-if="loading"  :type="'p'"/>
-                                            <p v-else class="text-center text-md text-slate-800 dark:text-slate-200 font-bold transition-all duration-400">{{ movieDetail.revenue }}</p>
+                                            <p v-else class="text-center text-md text-slate-800 dark:text-slate-200 font-bold transition-all duration-400">{{ moneyConvert(movieDetail.revenue) }}</p>
                                         </div>
                                     </div>
                                 </div>

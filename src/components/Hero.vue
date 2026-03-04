@@ -12,20 +12,19 @@ import 'swiper/css/pagination';
 import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
 import PlayIcon from '../icons/PlayIcon.vue';
 import Button from './ui/Button.vue';
-import Skeleton from './ui/skeleton/ListSkeleton.vue';
 import HeroSkeleton from './ui/skeleton/HeroSkeleton.vue';
 import TextSkeleton from './ui/skeleton/TextSkeleton.vue';
 
 const modules = [Autoplay,EffectFade,Navigation, Pagination];
 
-const { moviesInHero,loadingHero } = inject('movie-hero')
+const { moviesInHero,loadingHero } = inject('movie')
 
-const isSwiperEnabled =  ref(loadingHero)
+const isSwiperEnabled = ref(loadingHero)
 
 </script>
 <template>
     <section :class="`flex justify-center ${loadingHero ? 'animate-pulse' : ''} `">
-        <div class="w-full relative h-200 md:h-auto pt-[71px] ">
+        <div class="w-full relative h-200 md:h-auto pt-[70px] ">
             <swiper :enabled="isSwiperEnabled"
             :slides-per-view="1"
             :space-between="50"
