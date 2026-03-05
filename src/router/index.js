@@ -7,7 +7,7 @@ import MovieDetails from '../views/MovieDetails.vue'
 const routes = [
   { path: '/', name:'Home', component: Home },
   { path: '/not-Found',name:'NotFound', component: NotFound },
-  { path: '/movie/:id',name:'MovieDetail', component: MovieDetails },
+  { path: '/movie/:id(\\d+)',name:'MovieDetail', component: MovieDetails },
   { path: '/:pathMatch(.*)*', redirect: '/not-found' }
 ]
 

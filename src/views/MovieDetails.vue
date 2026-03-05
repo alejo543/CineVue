@@ -1,5 +1,5 @@
 <script setup>
-import { inject, onMounted, watch } from 'vue';
+import { inject, onMounted, watch, watchEffect } from 'vue';
 import { useMovieDetail } from '../composables/useMovieDetails';
 import { useRoute } from 'vue-router';
 import Star from '../icons/Star.vue'
@@ -15,10 +15,19 @@ import ListRecomendation from '../components/ListRecomendation.vue';
 import TextSkeleton from '../components/ui/skeleton/TextSkeleton.vue';
 import MovieCardSkeleton from '../components/ui/skeleton/MovieCardSkeleton.vue';
 import HeroSkeleton from '../components/ui/skeleton/HeroSkeleton.vue';
+import { useSeo } from '../composables/useSeo';
+import { useMovies } from '../composables/useMovies';
 
+const {findMovie, findMovieVideos, findMovieCast, findMovieRecomendations, loading, movieDetail, movieCast, movieVideos, movieRecomendations} = useMovieDetail()
+const {cleanInput} = inject('movie')
 const { openModal } = useModal();
 const route = useRoute();
-const {findMovie, findMovieVideos, findMovieCast, findMovieRecomendations, loading, movieDetail, movieCast, movieVideos, movieRecomendations} = useMovieDetail()
+
+watchEffect(()=>{
+    if(route.path == "/not-found" || route.path.includes('/movie/')){
+        cleanInput();
+    }
+})
 
 const loadAllData = (id) => {
     findMovie(id);
@@ -26,13 +35,12 @@ const loadAllData = (id) => {
     findMovieCast(id);
     findMovieRecomendations(id);
 }
+
+useSeo(movieDetail,'movie')
+
 onMounted(()=>{
     loadAllData(route.params.id);
 })
-
-onMounted(() => {
-    loadAllData(route.params.id);
-});
 
 watch(
     () => route.params.id,
@@ -57,10 +65,28 @@ const handleMoreInfo = () => {
     <section :class="`min-h-screen h-full pt-[71px] pb-20`">
         <!--<p class="text-white">{{ route.params.id }}</p>-->
         <div class="relative h-full">
-            <div class="absolute top-0 w-full z-1">
+            <div class="absolute min-h-[800px] top-0 w-full z-1">
                 <HeroSkeleton v-if="loading" />
-                <img v-else-if="!loading && movieDetail && movieDetail.backdrop_path" :src="`https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces/${movieDetail.backdrop_path}`" :alt="movieDetail.original_title" class="w-full h-full mask-l-from-0% mask-b-from-10% mask-l-to-90% text-slate-100 h-full transition-all duration-400" />
-                <img v-else-if="!loading && !movieDetail.backdrop_path" :src="`https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces_filter(blur)/${movieDetail.poster_path}`" :alt="movieDetail.original_title" class="w-full h-full mask-l-from-0% mask-b-from-10% mask-l-to-90% text-slate-100 h-full transition-all duration-400" />
+                <img v-else-if="!loading && movieDetail && movieDetail.backdrop_path" 
+                    :src="`https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces${movieDetail.backdrop_path}`" 
+                    :alt="movieDetail.original_title" 
+                    class="w-full h-full mask-l-from-0% mask-b-from-10% mask-l-to-90% text-slate-100 h-full transition-all duration-400" 
+                    fetchpriority="high" 
+                    loading="eager"
+                    decoding="sync"
+                    width="1920"
+                    height="auto" 
+                />
+                <img v-else-if="!loading && !movieDetail.backdrop_path" 
+                    :src="`https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces_filter(blur)${movieDetail.poster_path}`" 
+                    :alt="movieDetail.original_title" 
+                    class="w-full h-full mask-l-from-0% mask-b-from-10% mask-l-to-90% text-slate-100 h-full transition-all duration-400"
+                    fetchpriority="high" 
+                    loading="eager"
+                    decoding="sync"
+                    width="1920"
+                    height="auto"  
+                />
             </div>
             <div class="relative top-0 z-2 w-full h-full pt-50">
                 <div class="flex justify-center h-full">
@@ -91,7 +117,7 @@ const handleMoreInfo = () => {
                                 </div>
                                 <div class="flex items-center mt-4">
                                     <TextSkeleton v-if="loading" :type="'button'"/>
-                                    <Button v-else :typeBtn="'function'" @click="handleMoreInfo">
+                                    <Button v-else ariaLabel="Ver trailer de la pelicula" :typeBtn="'function'" @click="handleMoreInfo">
                                         <PlayIcon class="w-6 h-6"/>Ver Trailer
                                     </Button>
                                 </div>    

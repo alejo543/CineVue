@@ -1,10 +1,16 @@
 import { onMounted, watch, ref } from "vue"
 export function useMovies(){
     const textBusqueda = ref('');
+    const yearBusqueda = ref('');
     const movies = ref([]);
     const loading = ref(false);
     const moviesInHero = ref([]);
     const loadingHero = ref(false);
+
+    const cleanInput = () =>{
+            textBusqueda.value = ''
+            yearBusqueda.value = '' 
+    }
     
 
     const API_READ_ACCESS_TOKEN = import.meta.env.VITE_API_READ_ACCESS_TOKEN;
@@ -24,10 +30,10 @@ export function useMovies(){
         }
     };*/
     let searchTimer;
-    watch(textBusqueda, (newSearch) => {
+    watch([textBusqueda,yearBusqueda], ([newSearch, newYear]) => {
         clearTimeout(searchTimer);
         searchTimer = setTimeout(() => {
-        if(newSearch.length > 2){
+        if(newSearch.length > 2 || newYear.length > 0){
             searchMovie();
         }else{
             searchMovie()
@@ -41,12 +47,18 @@ export function useMovies(){
         if (isNewSearch) {
             PAGE.value = 1;
         }
-        if(!textBusqueda.value){
+
+        if(!textBusqueda.value && !yearBusqueda.value){
             ENDPOINT.value = `/discover/movie?page=${PAGE.value}`;
             //console.log("URL final:", `${BASE_URL}${ENDPOINT.value}`);
-        }else{
+        }else if(textBusqueda.value && !yearBusqueda.value){
             ENDPOINT.value = `/search/movie?query=${textBusqueda.value}&page=${PAGE.value}`;
             //console.log("URL final:", `${BASE_URL}${ENDPOINT.value}`);
+        }else if(!textBusqueda.value && yearBusqueda.value){
+            ENDPOINT.value = `/discover/movie?primary_release_year=${yearBusqueda.value}&page=${PAGE.value}`;
+
+        }else{
+            ENDPOINT.value = `/search/movie?query=${textBusqueda.value}&primary_release_year=${yearBusqueda.value}&page=${PAGE.value}`;
         }
 
         //console.log("URL final:", `${BASE_URL}${ENDPOINT}`);
@@ -99,5 +111,5 @@ export function useMovies(){
         }
     }
 
-    return{textBusqueda,movies,loading,searchMovie,moviesInHero,moviesHero, loadingHero}
+    return{textBusqueda,movies,loading,searchMovie,moviesInHero,moviesHero, loadingHero,yearBusqueda,cleanInput}
 }

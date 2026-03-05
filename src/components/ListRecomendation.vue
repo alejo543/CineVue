@@ -6,7 +6,6 @@ import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import ProfileNotFound from '../assets/profileNotfound.png'
 // Import required modules
 import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
 import MovieCard from './MovieCard.vue';

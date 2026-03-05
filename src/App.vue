@@ -9,17 +9,15 @@ import Modal from './components/Modal.vue';
 import { useFormaters } from './composables/useFormaters';
 const {isDark,toggleDarkMode,initTheme} =useDarkMode();
 
-const {textBusqueda,movies,loading,searchMovie,moviesInHero,moviesHero,loadingHero} = useMovies();
+const {textBusqueda,movies,loading,searchMovie,moviesInHero,moviesHero,loadingHero,yearBusqueda,cleanInput} = useMovies();
 const {timeMovieConvert,dateToYearConvert,rateConvert,moneyConvert} = useFormaters();
 
 onMounted(()=>{
   initTheme();
-  searchMovie();
-  moviesHero();
 })
 
 provide('theme', {isDark,toggleDarkMode});
-provide('movie', {textBusqueda,movies,loading,searchMovie,moviesInHero,loadingHero});
+provide('movie', {textBusqueda,movies,loading,searchMovie,moviesInHero,loadingHero,moviesHero,yearBusqueda,cleanInput});
 provide('formaters',{timeMovieConvert,dateToYearConvert,rateConvert,moneyConvert});
 
 useModalProvider();

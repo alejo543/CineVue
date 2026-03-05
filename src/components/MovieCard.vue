@@ -13,8 +13,8 @@ const { dateToYearConvert } = inject('formaters');
 
 <template>
     <div class="group relative w-full h-full rounded-xl overflow-hidden">
-        <img v-if="!movie.poster_path" :src="ImgNoFound" :alt="movie.title" class="group-hover:scale-[1.1] transition-all duration-600 w-full h-full" />
-        <img v-else  :src="`https://media.themoviedb.org/t/p/w300_and_h450_face/${movie.poster_path}`" :alt="movie.title" class="group-hover:scale-[1.1] transition-all duration-600 w-full h-full" />
+        <img v-if="!movie.poster_path" :src="ImgNoFound" :alt="movie.title" class="group-hover:scale-[1.1] aspect-[2/3] transition-all duration-600 w-full h-full" />
+        <img v-else  :src="`https://media.themoviedb.org/t/p/w220_and_h330_face/${movie.poster_path}`" :alt="movie.title" class="group-hover:scale-[1.1] aspect-[2/3] transition-all duration-600 w-full h-full" />
         <div class="absolute z-10 p-3 bg-black/50 hidden group-hover:flex top-0 w-full h-full">
             <RouterLink :to="`/movie/${movie.id}`" class="flex w-full justify-center items-center">
                 <div>

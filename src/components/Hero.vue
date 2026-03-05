@@ -9,23 +9,21 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 // Import required modules
-import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import PlayIcon from '../icons/PlayIcon.vue';
 import Button from './ui/Button.vue';
 import HeroSkeleton from './ui/skeleton/HeroSkeleton.vue';
 import TextSkeleton from './ui/skeleton/TextSkeleton.vue';
 
-const modules = [Autoplay,EffectFade,Navigation, Pagination];
+const modules = [Autoplay,Navigation,Pagination];
 
 const { moviesInHero,loadingHero } = inject('movie')
 
-const isSwiperEnabled = ref(loadingHero)
-
 </script>
 <template>
-    <section :class="`flex justify-center ${loadingHero ? 'animate-pulse' : ''} `">
-        <div class="w-full relative h-200 md:h-auto pt-[70px] ">
-            <swiper :enabled="isSwiperEnabled"
+    <section :class="`flex justify-center min-h-[500px] md:min-h-[800px] ${loadingHero ? 'animate-pulse' : ''} `">
+        <div class="w-full relative pt-[70px] ">
+            <swiper
             :slides-per-view="1"
             :space-between="50"
            
@@ -39,10 +37,37 @@ const isSwiperEnabled = ref(loadingHero)
             
             >
                 <SwiperSlide v-for="movie in moviesInHero" :key="movie.id" class="relative mask-radial-at-top mask-radial-from-100%" >
-                    <div class="mask-l-from-0% mask-b-from-10% mask-l-to-90% text-slate-100 h-full transition-all duration-400">
+                    <div class="mask-l-from-0% mask-b-from-10% md:mask-l-to-90% text-slate-100 h-full transition-all duration-400">
                         <HeroSkeleton v-if="loadingHero"/>
-                        <img v-else-if="!loadingHero && movie.backdrop_path" :src="`https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces/${movie.backdrop_path}`" :alt="movie.title" class="object-cover h-full md:h-auto md:w-full" />
-                        <img v-else-if="!loadingHero && !movie.backdrop_path" :src="`https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces_filter(blur)/${movie.poster_path}`" :alt="movie.title" class="object-cover h-full md:h-auto md:w-full" />
+                        <img v-else-if="!loadingHero && movie.backdrop_path" 
+                            :src="`https://media.themoviedb.org/t/p/w1280_and_h720_multi_faces${movie.backdrop_path}`" 
+                            :srcset="`
+                                https://media.themoviedb.org/t/p/w1280_and_h720_multi_faces${movie.backdrop_path} 1280w,
+                                https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces${movie.backdrop_path} 1920w
+                            `"
+                            sizes="(max-width: 1280px) 1280px, 1920px"
+                            :alt="movie.title" class="object-cover h-full md:w-full" 
+                            fetchpriority="high" 
+                            loading="eager"
+                            decoding="sync"
+                            width="1920"
+                            height="800" 
+                        />
+                        <img v-else-if="!loadingHero && !movie.backdrop_path" 
+                            :src="`https://media.themoviedb.org/t/p/w1280_and_h720_multi_faces_filter(blur)${movie.poster_path}`" 
+                            :srcset="`
+                                https://media.themoviedb.org/t/p/w1280_and_h720_multi_faces_filter(blur)${movie.poster_path} 1280w,
+                                https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces_filter(blur)${movie.poster_path} 1920w
+                            `"
+                            sizes="(max-width: 1280px) 1280px, 1920px" 
+                            :alt="movie.title" 
+                            class="object-cover h-full md:w-full" 
+                            fetchpriority="high" 
+                            loading="eager"
+                            decoding="sync" 
+                            width="1920"
+                            height="800" 
+                        />
                     </div>
                     <div class="absolute w-full h-full top-0 z-20 px-10 md:px-15 lg:px-30 flex items-center">
                         <div class="max-w-xl flex flex-col gap-5">
@@ -52,11 +77,10 @@ const isSwiperEnabled = ref(loadingHero)
                             <p v-else class="text-[3vw] sm:text-lg text-slate-600 dark:text-slate-400 font-medium">{{ movie.overview }}</p>
                             <div class="flex items-center">
                                 <TextSkeleton v-if="loadingHero" :type="'button'"/>
-                                <Button v-else :typeBtn="`internal`" :linkTo="`/movie/${movie.id}`">
+                                <Button v-else :typeBtn="`internal`" :linkTo="`/movie/${movie.id}`" ariaLabel="go to movie details">
                                     <PlayIcon class="w-6 h-6"/>Ver Detalles
                                 </Button>
                             </div>      
-                            
                         </div>
                     </div>
                 </SwiperSlide>

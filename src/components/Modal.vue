@@ -10,7 +10,7 @@ const { isOpen, modalTitle, modalContent, closeModal } = useModal();
         <div @click="closeModal" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
         <div class="relative bg-black w-full xl:w-[70%] h-[60vw] xl:h-[80%] rounded-xl">
             <div class="flex items-center justify-between p-4">
-                <h2 class="text-2xl md:text-4xl text-slate-100 font-bold transition-all duration-400">{{ modalTitle }}</h2>
+                <h2 class="text-[5vw] sm:text-3xl text-slate-100 font-bold transition-all duration-400">{{ modalTitle }}</h2>
                 <button @click="closeModal" class="hover:bg-white/5 text-white p-2 rounded transition-all duration-400"><CloseIcon class="w-5 h-5"/></button>
             </div>
             <div class="modal-body w-full h-[90%]">
