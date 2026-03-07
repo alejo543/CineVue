@@ -1,5 +1,5 @@
 <script setup>
-import { inject, ref, watch } from 'vue'
+import { inject } from 'vue'
 // Import Swiper Vue.js components
 import {Swiper, SwiperSlide } from 'swiper/vue';
 // Import Swiper styles
@@ -21,7 +21,7 @@ const { moviesInHero,loadingHero } = inject('movie')
 
 </script>
 <template>
-    <section :class="`flex justify-center min-h-[500px] md:min-h-[800px] ${loadingHero ? 'animate-pulse' : ''} `">
+    <section :class="`flex justify-center min-h-[500px] md:min-h-[800px] xl:max-h-[850px] transition-all duration-400 ${loadingHero ? 'animate-pulse' : ''} `">
         <div class="w-full relative pt-[70px] ">
             <swiper
             :slides-per-view="1"
@@ -41,12 +41,7 @@ const { moviesInHero,loadingHero } = inject('movie')
                         <HeroSkeleton v-if="loadingHero"/>
                         <img v-else-if="!loadingHero && movie.backdrop_path" 
                             :src="`https://media.themoviedb.org/t/p/w1280_and_h720_multi_faces${movie.backdrop_path}`" 
-                            :srcset="`
-                                https://media.themoviedb.org/t/p/w1280_and_h720_multi_faces${movie.backdrop_path} 1280w,
-                                https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces${movie.backdrop_path} 1920w
-                            `"
-                            sizes="(max-width: 1280px) 1280px, 1920px"
-                            :alt="movie.title" class="object-cover h-full md:w-full" 
+                            :alt="movie.title" class="object-cover object-top h-full md:w-full" 
                             fetchpriority="high" 
                             loading="eager"
                             decoding="sync"
@@ -55,13 +50,8 @@ const { moviesInHero,loadingHero } = inject('movie')
                         />
                         <img v-else-if="!loadingHero && !movie.backdrop_path" 
                             :src="`https://media.themoviedb.org/t/p/w1280_and_h720_multi_faces_filter(blur)${movie.poster_path}`" 
-                            :srcset="`
-                                https://media.themoviedb.org/t/p/w1280_and_h720_multi_faces_filter(blur)${movie.poster_path} 1280w,
-                                https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces_filter(blur)${movie.poster_path} 1920w
-                            `"
-                            sizes="(max-width: 1280px) 1280px, 1920px" 
                             :alt="movie.title" 
-                            class="object-cover h-full md:w-full" 
+                            class="object-cover object-top h-full md:w-full" 
                             fetchpriority="high" 
                             loading="eager"
                             decoding="sync" 
