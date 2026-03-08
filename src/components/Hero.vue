@@ -22,7 +22,7 @@ const { moviesInHero,loadingHero } = inject('movie')
 </script>
 <template>
     <section :class="`flex justify-center min-h-[500px] md:min-h-[800px] xl:max-h-[850px] transition-all duration-400 ${loadingHero ? 'animate-pulse' : ''} `">
-        <div class="w-full relative pt-[70px] ">
+        <div class="w-full relative pt-[70px]">
             <swiper
             :slides-per-view="1"
             :space-between="50"

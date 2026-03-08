@@ -12,7 +12,7 @@ import MovieCard from './MovieCard.vue';
 
 const props = defineProps({
   recomendations: Array
-})
+});
 
 
 const modules = [Autoplay,EffectFade,Navigation, Pagination];

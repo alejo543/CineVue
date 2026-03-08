@@ -2,19 +2,19 @@ import { ref } from "vue";
 
 export function useMovieDetail(){
     //const route =  useRoute()
-    const movieDetail = ref({})
-    const movieVideos = ref([])
-    const movieCast = ref([])
-    const movieRecomendations = ref([])
+    const movieDetail = ref({});
+    const movieVideos = ref([]);
+    const movieCast = ref([]);
+    const movieRecomendations = ref([]);
     const loading = ref(true);
 
     const API_READ_ACCESS_TOKEN = import.meta.env.VITE_API_READ_ACCESS_TOKEN;
-    const API_KEY = import.meta.env.VITE_API_KEY;
+    //const API_KEY = import.meta.env.VITE_API_KEY;
     const BASE_URL = 'https://api.themoviedb.org/3';
     const ENDPOINT = '/movie/';
 
     const findMovie = async (id) =>{
-        loading.value = true
+        loading.value = true;
 
         try{
             const option = {
@@ -38,7 +38,7 @@ export function useMovieDetail(){
     }
 
     const findMovieVideos = async (id) =>{
-        loading.value = true
+        loading.value = true;
 
         try{
             const option = {
@@ -62,7 +62,7 @@ export function useMovieDetail(){
     }
 
     const findMovieCast = async (id) =>{
-        loading.value = true
+        loading.value = true;
 
         try{
             const option = {
@@ -86,12 +86,11 @@ export function useMovieDetail(){
     }
 
     const findMovieRecomendations = async (id) =>{
-        loading.value = true
+        loading.value = true;
         try{
             const option = {
                 method:'GET',
                 headers: {
-                    accept: 'application/json',
                     Authorization: `Bearer ${API_READ_ACCESS_TOKEN}`
                 }
             };

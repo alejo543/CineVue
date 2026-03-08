@@ -2,8 +2,8 @@
 import { inject } from 'vue';
 import { getYears } from '../composables/getYears';
 
-const {ascOrder} = getYears()
-const { textBusqueda,searchMovie,yearBusqueda } = inject('movie')
+const {ascOrder} = getYears();
+const { textBusqueda,searchMovie,yearBusqueda } = inject('movie');
 </script>
 
 <template>

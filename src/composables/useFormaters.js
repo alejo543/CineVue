@@ -18,7 +18,7 @@ export function useFormaters(){
     }
 
     const rateConvert = (rate) => {
-        const rateRound =  Math.round(rate * 10) / 10;;
+        const rateRound =  Math.round(rate * 10) / 10;
 
         return rateRound;
     }

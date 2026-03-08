@@ -6,13 +6,13 @@ import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import ProfileNotFound from '../assets/profileNotfound.png'
+import ProfileNotFound from '../assets/img/profile-not-found.png';
 // Import required modules
 import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
 
 const props = defineProps({
   cast: Array
-})
+});
 
 
 const modules = [Autoplay,EffectFade,Navigation, Pagination];

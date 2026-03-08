@@ -1,8 +1,7 @@
 <script setup>
-import PageNotFoundIMGLigh from '../assets/error-404-light.png'
-import PageNotFoundIMGDark from '../assets/error-404-dark.png'
-import { inject, onMounted } from 'vue';
-import { RouterLink } from 'vue-router';
+import PageNotFoundIMGLigh from '../assets/img/error-404-light.png';
+import PageNotFoundIMGDark from '../assets/img/error-404-dark.png';
+import { inject } from 'vue';
 import Button from '../components/ui/Button.vue';
 import Badge from '../components/ui/Badge.vue';
 import { useSeo } from '../composables/useSeo';
@@ -10,10 +9,9 @@ import { useSeo } from '../composables/useSeo';
 useSeo({
     title:'CineVue - Not Found',
     description:'Lo sentimos pero no se pudo encontrar esta página.'
-},'page')
+},'page');
 
-const { isDark } = inject('theme')
-
+const { isDark } = inject('theme');
 
 </script>
 <template>

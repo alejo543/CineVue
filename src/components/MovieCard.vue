@@ -1,19 +1,25 @@
 <script setup>
 import { RouterLink } from 'vue-router';
-import ImgNoFound from '../assets/imgNotFound.png'
-import PlayIcon from '../icons/PlayIcon.vue'
-import { inject } from 'vue';
+import PosterNotFoundDark from '../assets/img/poster-not-found-dark.png';
+import PosterNotFoundDLight from '../assets/img/poster-not-found-light.png';
+import PlayIcon from '../icons/PlayIcon.vue';
+import { computed, inject } from 'vue';
 const props = defineProps({
   movie: Object,
   type:{type:String,required:true},
-})
-
+});
+const { isDark } = inject('theme');
 const { dateToYearConvert } = inject('formaters');
+
+const posterNotFound = computed(() => {
+  return isDark.value ? PosterNotFoundDark : PosterNotFoundDLight;
+});
+
 </script>
 
 <template>
     <div class="group relative w-full h-full rounded-xl overflow-hidden">
-        <img v-if="!movie.poster_path" :src="ImgNoFound" :alt="movie.title" class="group-hover:scale-[1.1] aspect-[2/3] transition-all duration-600 w-full h-full" />
+        <img v-if="!movie.poster_path" :src="posterNotFound" :alt="movie.title" class="group-hover:scale-[1.1] aspect-[2/3] transition-all duration-600 w-full h-full" />
         <img v-else  :src="`https://media.themoviedb.org/t/p/w220_and_h330_face/${movie.poster_path}`" :alt="movie.title" class="group-hover:scale-[1.1] aspect-[2/3] transition-all duration-600 w-full h-full" />
         <div class="absolute z-10 p-3 bg-black/50 hidden group-hover:flex top-0 w-full h-full">
             <RouterLink :to="`/movie/${movie.id}`" class="flex w-full justify-center items-center">

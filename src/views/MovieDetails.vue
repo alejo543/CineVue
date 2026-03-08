@@ -1,9 +1,9 @@
 <script setup>
-import { inject, onMounted, watch, watchEffect } from 'vue';
+import { computed, inject, onMounted, ref, watch, watchEffect } from 'vue';
 import { useMovieDetail } from '../composables/useMovieDetails';
 import { useRoute } from 'vue-router';
-import Star from '../icons/Star.vue'
-import Calendar from '../icons/Calendar.vue'
+import Star from '../icons/Star.vue';
+import Calendar from '../icons/Calendar.vue';
 import Time from '../icons/Time.vue';
 import Company from '../icons/Company.vue';
 import PlayIcon from '../icons/PlayIcon.vue';
@@ -16,10 +16,12 @@ import TextSkeleton from '../components/ui/skeleton/TextSkeleton.vue';
 import MovieCardSkeleton from '../components/ui/skeleton/MovieCardSkeleton.vue';
 import HeroSkeleton from '../components/ui/skeleton/HeroSkeleton.vue';
 import { useSeo } from '../composables/useSeo';
-import { useMovies } from '../composables/useMovies';
+import PosterNotFoundDark from '../assets/img/poster-not-found-dark.png';
+import PosterNotFoundDLight from '../assets/img/poster-not-found-light.png';
 
-const {findMovie, findMovieVideos, findMovieCast, findMovieRecomendations, loading, movieDetail, movieCast, movieVideos, movieRecomendations} = useMovieDetail()
-const {cleanInput} = inject('movie')
+const {findMovie, findMovieVideos, findMovieCast, findMovieRecomendations, loading, movieDetail, movieCast, movieVideos, movieRecomendations} = useMovieDetail();
+const {cleanInput} = inject('movie');
+const { isDark } = inject('theme');
 const { openModal } = useModal();
 const route = useRoute();
 
@@ -36,7 +38,11 @@ const loadAllData = (id) => {
     findMovieRecomendations(id);
 }
 
-useSeo(movieDetail,'movie')
+const posterNotFound = computed(() => {
+  return isDark.value ? PosterNotFoundDark : PosterNotFoundDLight;
+});
+
+useSeo(movieDetail,'movie');
 
 onMounted(()=>{
     loadAllData(route.params.id);
@@ -62,39 +68,39 @@ const handleMoreInfo = () => {
 
 </script>
 <template>
-    <section :class="`min-h-screen h-full pt-[71px] pb-20`">
+    <section :class="`min-h-screen h-full pt-[70px] pb-20`">
         <!--<p class="text-white">{{ route.params.id }}</p>-->
         <div class="relative h-full">
             <div class="absolute min-h-[800px] top-0 w-full z-1">
                 <HeroSkeleton v-if="loading" />
                 <img v-else-if="!loading && movieDetail && movieDetail.backdrop_path" 
-                    :src="`https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces${movieDetail.backdrop_path}`" 
+                    :src="`https://media.themoviedb.org/t/p/w1280_and_h720_multi_faces${movieDetail.backdrop_path}`" 
                     :alt="movieDetail.original_title" 
                     class="w-full h-full mask-l-from-0% mask-b-from-10% mask-l-to-90% text-slate-100 h-full transition-all duration-400" 
                     fetchpriority="high" 
                     loading="eager"
                     decoding="sync"
                     width="1920"
-                    height="auto" 
+                    height="900" 
                 />
                 <img v-else-if="!loading && !movieDetail.backdrop_path" 
-                    :src="`https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces_filter(blur)${movieDetail.poster_path}`" 
+                    :src="`https://media.themoviedb.org/t/p/w1280_and_h720_multi_faces_filter(blur)${movieDetail.poster_path}`" 
                     :alt="movieDetail.original_title" 
                     class="w-full h-full mask-l-from-0% mask-b-from-10% mask-l-to-90% text-slate-100 h-full transition-all duration-400"
                     fetchpriority="high" 
                     loading="eager"
                     decoding="sync"
                     width="1920"
-                    height="auto"  
+                    height="800"  
                 />
             </div>
-            <div class="relative top-0 z-2 w-full h-full pt-50">
+            <div class="relative top-0 z-2 w-full h-full pt-50 min-h-screen">
                 <div class="flex justify-center h-full">
                     <div class="max-w-6xl w-full px-4">
                         <div class="flex w-full gap-8">
                             <div class="hidden md:flex">
                                 <MovieCardSkeleton v-if="loading" />
-                                <img v-else :src="`https://media.themoviedb.org/t/p/w300_and_h450_face/${movieDetail.poster_path}`" :alt="movieDetail.original_title" class="rounded-xl"/>
+                                <img v-else :src="!movieDetail.poster_path ? posterNotFound : `https://media.themoviedb.org/t/p/w300_and_h450_face/${movieDetail.poster_path}`" :alt="movieDetail.original_title" class="rounded-xl"/>
                             </div>
                             <div>
                                 <div class="flex gap-3 flex-wrap" >
@@ -152,7 +158,7 @@ const handleMoreInfo = () => {
                                     <h3 class="text-slate-800 dark:text-slate-200 font-bold transition-all duration-400">Quick Stats</h3>
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5">
                                         <div class="p-5 bg-slate-100 dark:bg-slate-900 p-3 rounded-lg border border-slate-300 dark:border-slate-800 transition-all duration-400">
-                                            <p class="text-center text-slate-600 dark:text-slate-600 font-bold transition-all duration-400">status</p>
+                                            <p class="text-center text-slate-600 dark:text-slate-600 font-bold transition-all duration-400">Status</p>
                                             <TextSkeleton v-if="loading"  :type="'p'"/>
                                             <p v-else class="text-center text-md text-slate-800 dark:text-slate-200 font-bold">{{ movieDetail.status }}</p>
                                         </div>

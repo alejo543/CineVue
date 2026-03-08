@@ -8,17 +8,17 @@ export function useMovies(){
     const loadingHero = ref(false);
 
     const cleanInput = () =>{
-            textBusqueda.value = ''
-            yearBusqueda.value = '' 
-    }
+        textBusqueda.value = ''
+        yearBusqueda.value = '' 
+    };
     
 
     const API_READ_ACCESS_TOKEN = import.meta.env.VITE_API_READ_ACCESS_TOKEN;
-    const API_KEY = import.meta.env.VITE_API_KEY;
+    //const API_KEY = import.meta.env.VITE_API_KEY;
     const BASE_URL = 'https://api.themoviedb.org/3';
     const ENDPOINT = ref('');
     const ENDPOINTHERO = '/discover/movie';
-    const PAGE =  ref(1)
+    const PAGE =  ref(1);
 
     /*const getGenres = async () => {
         try {
@@ -36,7 +36,7 @@ export function useMovies(){
         if(newSearch.length > 2 || newYear.length > 0){
             searchMovie();
         }else{
-            searchMovie()
+            searchMovie();
         }
         }, 400) 
     })
@@ -91,7 +91,7 @@ export function useMovies(){
     }
 
     const moviesHero = async () => {
-        loadingHero.value = true
+        loadingHero.value = true;
         try{
             const options = {
                 method: 'GET',

@@ -1,5 +1,5 @@
 <script setup>
-import { computed, inject, ref, watch, watchEffect } from 'vue'
+import { computed, inject, ref, watch, watchEffect } from 'vue';
 import PlaySolid from '../icons/PlaySolid.vue';
 import Sun from '../icons/Sun.vue';
 import Moon from '../icons/Moon.vue';
@@ -19,7 +19,7 @@ watchEffect(()=>{
     }else{
         hiddeBtnSearch.value = false
     }
-})
+});
 
 const classBtnSearch = computed(()=>{
     if(hiddeBtnSearch.value){
@@ -27,12 +27,11 @@ const classBtnSearch = computed(()=>{
     }else{
         return 'flex'
     }
-})
-
+});
 
 function togglerSearchBar(val){
     showSearchBar.value = val
-}
+};
 
 const classInput = computed(()=>{
     if(showSearchBar.value){
@@ -40,7 +39,7 @@ const classInput = computed(()=>{
     }else{
         return '-translate-y-[70px]'
     }
-})
+});
 
 </script>
 <template>

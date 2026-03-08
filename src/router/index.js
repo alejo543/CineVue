@@ -17,7 +17,7 @@ export const router = createRouter({
   scrollBehavior(to, from, savedPosition) {
     // Si el navegador tiene una posición guardada (ej. al darle atrás), la usa
     if (savedPosition) {
-      return savedPosition
+      return savedPosition;
     } else {
       // Si es una navegación nueva, siempre va al top
       return { top: 0 } // 'smooth' para un scroll animado
